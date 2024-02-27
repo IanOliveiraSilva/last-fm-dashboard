@@ -1,0 +1,258 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#dashboard-container {
+    width: 100%;
+    margin: auto;
+}
+
+.section-container {
+    border: 2px solid #663ac4;
+    border-radius: 15px;
+    margin: 20px;
+    background-color: #fff;
+    padding: 20px;
+}
+
+.dashboard-header {
+    text-align: center;
+    padding: 20px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#user-input{
+    width: 50vw;
+    height: 50px;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #7a4bd8;
+    outline: none;
+    box-shadow: 0px 0px 5px 1px #5229b1;
+}
+
+#period-input, #graph-type-input {
+    width: 25vw;
+    height: 50px;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #7a4bd8;
+    outline: none;
+    box-shadow: 0px 0px 5px 1px #5229b1;
+}
+
+#submit-button {
+    width: 50vw;
+    background-color: #a16dfe;
+    font-size: 20px;
+    color: white;
+    border: none;
+    font-size: 25px;
+    font-weight: bold;
+    padding: 5px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: 0 2px #999;
+}
+
+#user-info {
+    padding: 20px;
+    margin: 20px;
+    font-size: 15px;
+    border-radius: 15px;
+}
+
+.user-info-container {
+    text-align: center;
+}
+
+.user-name {
+    color: #5a189a;
+    text-transform: uppercase;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 20px;
+    border-bottom: 3px solid #5a189a;
+    text-shadow: 2px 2px 2px #ffffff;
+    text-decoration: none;
+}
+
+.user-image {
+    border: 3px solid #5a189a;
+    border-radius: 50%;
+    box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.15);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+    height: 250px;
+}
+
+.user-image:hover {
+    transform: scale(1.1);
+    transition: transform .2s;
+}
+
+.user-name:hover {
+    transform: scale(1.1);
+    transition: transform .2s;
+    text-decoration: underline;
+}
+
+.info-card {
+    color: #4d194d;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px;
+    background-color: #f3e8ee;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.info-card:hover {
+    transform: scale(1.1);
+    transition: transform .2s;
+    box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.15);
+}
+
+.info-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.remove-text-decoration{
+    text-decoration: none;
+    color: #4d194d;
+}
+
+.artist-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.artist-card {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    margin: 20px;
+    padding: 20px;
+    width: 300px;
+    transition: transform .2s;
+}
+
+.artist-card:hover {
+    transform: scale(1.05);
+}
+
+.artist-card h2 {
+    color: #333;
+    font-size: 24px;
+}
+
+.artist-card .genre span {
+    color: #777;
+    font-weight: bold;
+}
+
+.artist-card p {
+    color: #666;
+    font-size: 16px;
+}
+
+.artist-card .similar-artists {
+    list-style-type: none;
+    padding-left: 0;
+    
+}
+
+.artist-card .similar-artists li {
+    background-color: #eee;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 5px;
+    font-size: 15px;
+    
+}
+.genre-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    margin: 20px;
+    padding: 20px;
+    width: 300px;
+    transition: transform .2s;
+}
+
+.genre-container:hover {
+    transform: scale(1.05);
+}
+
+.genre-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.genre-title {
+    color: #333;
+    font-size: 24px;
+}
+
+.genre-subtitle {
+    color: #666;
+    font-size: 16px;
+}
+
+.genre-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.genre-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #eee;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 5px;
+    font-size: 20px;
+    width: 100%;
+}
+
+.genre-name {
+    font-weight: bold;
+}
+
+.genre-bar {
+    height: 10px;
+    background-color: #777;
+}
+
+

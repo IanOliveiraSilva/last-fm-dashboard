@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Gráfico</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" type="text/css" href="https://codepen.io/chriddyp/pen/bWLwgP.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+
+</head>
+
+<body>
+
+    <div id="dashboard-container">
+        <div>
+            <div class="dashboard-header">Last.fm Dashboard</div>
+            <div class="input-container">
+                <form action="/" method="POST">
+                    <input id="user-input" name="user" type="text" placeholder="Enter Last.fm username">
+                    <br>
+                    <br>
+                    <select id="period-input" name="period">
+                        <option value="7day">7 days</option>
+                        <option value="1month">1 month</option>
+                        <option value="3month">3 months</option>
+                        <option value="6month">6 months</option>
+                        <option value="12month">12 months</option>
+                    </select>
+                    <br>
+                    <br>
+                    <button id="submit-button">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="user-info"></div>
+
+        <div class="user-info-container">
+            <div>
+                <a class="user-name" href="{{ data_user.user.url }}" target="_blank">{{ data_user.user.name }}</a>
+            </div>
+
+            <br>
+            <br>
+
+            <a href="{{ data_user.user.url }}" target="_blank">
+                <img class="user-image" src="{{ data_user.user.image[-1]['#text'] }}" alt="User Image">
+            </a>
+
+            <br>
+
+            <div class="info-container">
+                <div class="info-card">
+                    <a class="remove-text-decoration"
+                        href="https://www.last.fm/pt/user/{{ data_user.user.name }}/library" target="_blank">
+                        Playcount: {{ data_user.user.playcount }}
+                    </a>
+                </div>
+
+                <div class="info-card">
+                    <a class="remove-text-decoration"
+                        href="https://www.last.fm/pt/user/{{ data_user.user.name }}/library/artists" target="_blank">
+                        Artist count: {{ data_user.user.artist_count }}
+                    </a>
+                </div>
+
+                <div class="info-card">
+                    <a class="remove-text-decoration"
+                        href="https://www.last.fm/pt/user/{{ data_user.user.name }}/library/tracks" target="_blank">
+                        Track count: {{ data_user.user.track_count }}
+                    </a>
+                </div>
+
+                <div class="info-card">
+                    <a class="remove-text-decoration"
+                        href="https://www.last.fm/pt/user/{{ data_user.user.name }}/library/albums" target="_blank">
+                        Album count: {{ data_user.user.album_count }}
+                    </a>
+                </div>
+
+                <div class="info-card">
+                    <a class="remove-text-decoration"
+                        href="https://www.last.fm/pt/user/{{ data_user.user.name }}/library/albums" target="_blank">
+                        Album count: {{ data_loved_tracks.lovedtracks.track.name }}
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="artist-container">
+            <div class="genre-container">
+                <div class="genre-header">
+                    <h2 class="genre-title">🎵 Seu gênero mais ouvido é: <span>{{ sorted_genres[0][0] }}</span></h2>
+                    <p class="genre-subtitle">Explore outros gêneros que você também curte:</p>
+                </div>
+                <div class="genre-list">
+                    {% for genre, count in sorted_genres[1:] %}
+                    <div class="genre-item">
+                        <div class="genre-name">{{ genre }}</div>
+                        <div class="genre-bar" style="width: {{ count }}0px;"></div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <br>
+            {% for item in top_artists_and_similars %}
+                <div class="artist-card">
+                    <h1>Top artists</h1>
+                    <h2>🎵  <a target="_blank" class="remove-text-decoration" href="https://www.last.fm/pt/music/{{ item.top_artist | replace(" ", "%20") }}">{{ item.top_artist }}</a></h2>
+                    <p class="genre">Gênero: <span>{{ item.genre }}</span></p>
+                    <p>Você tem ouvido bastante {{ item.top_artist }} recentemente. Que tal explorar alguns artistas semelhantes?</p>
+                    <h3>Artistas Semelhantes:</h3>
+                    <ul class="similar-artists">
+                        {% for similar_artist in item.similar_artists %}
+                        <li><a target="_blank" class="remove-text-decoration" href="https://www.last.fm/pt/music/{{ similar_artist | replace(" ", "%20") }}">{{ similar_artist }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+                <br>
+        </div>
+    </div>
+</body>
+
+</html>
