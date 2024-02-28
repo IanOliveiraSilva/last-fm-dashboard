@@ -46,18 +46,22 @@ def count_genre_frequency(results):
     for item in results:
         genre = item['genre']
         genre_count[genre] = genre_count.get(genre, 0) + 1
+
+    genre_count = dict(sorted(genre_count.items(), key=lambda item: item[1], reverse=True)[:7])
+
     return genre_count
+
 
 def get_user_input():
     user = request.form.get('user')
     period = request.form.get('period')
     return user, period
 
+
 def get_data(fetcher):
     data_artists = fetcher.get_json_data("user.gettopartists")
     data_user = fetcher.get_user_info()
-    data_loved_tracks = fetcher.get_json_data("user.getlovedtracks")
-    return data_artists, data_user, data_loved_tracks
+    return data_artists, data_user
 
 def process_data(fetcher, data_artists):
     top_artists_and_similars = get_top_artists_and_similars(fetcher, data_artists)
@@ -71,11 +75,16 @@ def index():
     if request.method == 'POST':
         user, period = get_user_input()
         fetcher = DataFetcher(user, period)
-        data_artists, data_user, data_loved_tracks = get_data(fetcher)
+        data_artists, data_user= get_data(fetcher)
         sorted_genres, top_artists_and_similars = process_data(fetcher, data_artists)
-        print(data_loved_tracks)
-        return render_template('index.html', data_loved_tracks=data_loved_tracks, sorted_genres=sorted_genres, top_artists_and_similars=top_artists_and_similars, data_user=data_user)
-
+        return render_template('index.html', data_user=data_user)
+    else: 
+        user, period = get_user_input()
+        fetcher = DataFetcher(user, period)
+        data_artists, data_user= get_data(fetcher)
+        sorted_genres, top_artists_and_similars = process_data(fetcher, data_artists)
+        return render_template('index.html', data_user=data_user)
+        
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=3333)
