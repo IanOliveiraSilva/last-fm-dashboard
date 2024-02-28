@@ -51,12 +51,10 @@ def count_genre_frequency(results):
 
     return genre_count
 
-
 def get_user_input():
     user = request.form.get('user')
     period = request.form.get('period')
     return user, period
-
 
 def get_data(fetcher):
     data_artists = fetcher.get_json_data("user.gettopartists")
@@ -77,13 +75,13 @@ def index():
         fetcher = DataFetcher(user, period)
         data_artists, data_user= get_data(fetcher)
         sorted_genres, top_artists_and_similars = process_data(fetcher, data_artists)
-        return render_template('index.html', data_user=data_user)
+        return render_template('index.html', sorted_genres=sorted_genres, top_artists_and_similars=top_artists_and_similars, data_user=data_user)
     else: 
         user, period = get_user_input()
         fetcher = DataFetcher(user, period)
         data_artists, data_user= get_data(fetcher)
         sorted_genres, top_artists_and_similars = process_data(fetcher, data_artists)
-        return render_template('index.html', data_user=data_user)
+        return render_template('index.html', sorted_genres=sorted_genres, top_artists_and_similars=top_artists_and_similars, data_user=data_user)
         
 
 if __name__ == '__main__':

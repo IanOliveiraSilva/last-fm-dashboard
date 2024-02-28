@@ -84,6 +84,39 @@
 
             </div>
         </div>
+
+        <div class="artist-container">
+            <div class="genre-container">
+                <div class="genre-header">
+                    <h2 class="genre-title">🎵 Seu gênero mais ouvido é: <span>{{ sorted_genres[0][0] }}</span></h2>
+                    <p class="genre-subtitle">Explore outros gêneros que você também curte:</p>
+                </div>
+                <div class="genre-list">
+                    {% for genre, count in sorted_genres[1:] %}
+                    <div class="genre-item">
+                        <div class="genre-name">{{ genre }}</div>
+                        <div class="genre-bar" style="width: {{ count }}0px;"></div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <br>
+            {% for item in top_artists_and_similars %}
+                <div class="artist-card">
+                    <h1>Top artists</h1>
+                    <h2>🎵  <a target="_blank" class="remove-text-decoration" href="https://www.last.fm/pt/music/{{ item.top_artist | replace(" ", "%20") }}">{{ item.top_artist }}</a></h2>
+                    <p class="genre">Gênero: <span>{{ item.genre }}</span></p>
+                    <p>Você tem ouvido bastante {{ item.top_artist }} recentemente. Que tal explorar alguns artistas semelhantes?</p>
+                    <h3>Artistas Semelhantes:</h3>
+                    <ul class="similar-artists">
+                        {% for similar_artist in item.similar_artists %}
+                        <li><a target="_blank" class="remove-text-decoration" href="https://www.last.fm/pt/music/{{ similar_artist | replace(" ", "%20") }}">{{ similar_artist }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+                <br>
+        </div>
     </div>
 </body>
 
