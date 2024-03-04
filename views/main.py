@@ -44,6 +44,7 @@ def get_top_track(data_track):
     return top_track
 
 def get_top_album(data_album):
+    top_album = ''
     for album in data_album['topalbums']['album'][:1]:
         top_album = album['name']
         print(top_album)
