@@ -70,9 +70,14 @@ def index():
     else: 
         user, period = get_user_input()
         fetcher = DataFetcher(user, period)
-        data_artists, data_user= get_data(fetcher)
+        data_artists, data_user, data_tracks, data_albums = get_data(fetcher)
         top_artists_and_similars = process_data(fetcher, data_artists)
-        return render_template('index.html', top_artists_and_similars=top_artists_and_similars, data_user=data_user)
+        top_track = get_top_track(data_tracks)
+        top_album = get_top_album(data_albums)
+        plotter = Plotter()
+        data_pie_top_track = plotter.plot_data_pie(data_tracks, "track", user, period)
+        data_pie_top_album = plotter.plot_data_pie(data_albums, "album", user, period)
+        return render_template('index.html', period=period, top_track=top_track, top_album=top_album, top_artists_and_similars=top_artists_and_similars, data_user=data_user, data_pie_top_album=data_pie_top_album, data_pie_top_track=data_pie_top_track)
         
 
 if __name__ == '__main__':
