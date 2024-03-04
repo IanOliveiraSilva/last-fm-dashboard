@@ -17,27 +17,28 @@
 
     <div id="dashboard-container">
         <div>
-            <div class="dashboard-header">Last.fm Dashboard</div>
+            <div class="dashboard-header">Explore seus dados do LAST.FM</div>
+
             <div class="input-container">
                 <form action="/" method="POST">
-                    <input id="user-input" name="user" type="text" placeholder="Enter Last.fm username">
+                    <input id="user-input" name="user" type="text" placeholder="Digite seu usuario do last.fm">
                     <br>
                     <br>
                     <select id="period-input" name="period">
-                        <option value="7day">7 days</option>
-                        <option value="1month">1 month</option>
-                        <option value="3month">3 months</option>
-                        <option value="6month">6 months</option>
-                        <option value="12month">12 months</option>
+                        <option value="7day">Últimos 7 dias</option>
+                        <option value="1month">Último mês</option>
+                        <option value="3month">Últimos 3 meses</option>
+                        <option value="6month">Últimos 6 meses</option>
+                        <option value="12month">Últimos 12 meses</option>
                     </select>
                     <br>
                     <br>
-                    <button id="submit-button">Submit</button>
+                    <button id="submit-button">Enviar</button>
                 </form>
             </div>
         </div>
+        <hr class="separator">
 
-        <div id="user-info"></div>
 
         <div class="user-info-container">
             <div>
@@ -55,69 +56,112 @@
 
             <div class="info-container">
                 <div class="info-card">
-                    <a class="remove-text-decoration"
-                        href="https://www.last.fm/pt/user/{{ data_user.user.name }}/library" target="_blank">
-                        Playcount: {{ data_user.user.playcount }}
+                    <a class="remove-text-decoration" href="https://www.last.fm/pt/user/{{ data_user.user.name }}/library"
+                        target="_blank">
+                        Total de Reproduções: {{ data_user.user.playcount }}
                     </a>
                 </div>
-
+            
                 <div class="info-card">
-                    <a class="remove-text-decoration"
-                        href="https://www.last.fm/pt/user/{{ data_user.user.name }}/library/artists" target="_blank">
-                        Artist count: {{ data_user.user.artist_count }}
+                    <a class="remove-text-decoration" href="https://www.last.fm/pt/user/{{ data_user.user.name }}/library/artists"
+                        target="_blank">
+                        Artistas: {{ data_user.user.artist_count }}
                     </a>
                 </div>
-
+            
                 <div class="info-card">
-                    <a class="remove-text-decoration"
-                        href="https://www.last.fm/pt/user/{{ data_user.user.name }}/library/tracks" target="_blank">
-                        Track count: {{ data_user.user.track_count }}
+                    <a class="remove-text-decoration" href="https://www.last.fm/pt/user/{{ data_user.user.name }}/library/tracks"
+                        target="_blank">
+                        Músicas: {{ data_user.user.track_count }}
                     </a>
                 </div>
-
+            
                 <div class="info-card">
-                    <a class="remove-text-decoration"
-                        href="https://www.last.fm/pt/user/{{ data_user.user.name }}/library/albums" target="_blank">
-                        Album count: {{ data_user.user.album_count }}
+                    <a class="remove-text-decoration" href="https://www.last.fm/pt/user/{{ data_user.user.name }}/library/albums"
+                        target="_blank">
+                        Álbuns: {{ data_user.user.album_count }}
                     </a>
                 </div>
-
             </div>
+            
         </div>
 
+        <hr class="separator">
         <div class="artist-container">
-            <div class="genre-container">
-                <div class="genre-header">
-                    <h2 class="genre-title">🎵 Seu gênero mais ouvido é: <span>{{ sorted_genres[0][0] }}</span></h2>
-                    <p class="genre-subtitle">Explore outros gêneros que você também curte:</p>
-                </div>
-                <div class="genre-list">
-                    {% for genre, count in sorted_genres[1:] %}
-                    <div class="genre-item">
-                        <div class="genre-name">{{ genre }}</div>
-                        <div class="genre-bar" style="width: {{ count }}0px;"></div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <br>
+
+            <h1 class="retrospect-title">🎉 Seus artistas mais ouvidos</h1>
             {% for item in top_artists_and_similars %}
-                <div class="artist-card">
-                    <h1>Top artists</h1>
-                    <h2>🎵  <a target="_blank" class="remove-text-decoration" href="https://www.last.fm/pt/music/{{ item.top_artist | replace(" ", "%20") }}">{{ item.top_artist }}</a></h2>
-                    <p class="genre">Gênero: <span>{{ item.genre }}</span></p>
-                    <p>Você tem ouvido bastante {{ item.top_artist }} recentemente. Que tal explorar alguns artistas semelhantes?</p>
-                    <h3>Artistas Semelhantes:</h3>
-                    <ul class="similar-artists">
-                        {% for similar_artist in item.similar_artists %}
-                        <li><a target="_blank" class="remove-text-decoration" href="https://www.last.fm/pt/music/{{ similar_artist | replace(" ", "%20") }}">{{ similar_artist }}</a></li>
-                        {% endfor %}
+            <div class="artist-card {% if loop.first %}most-listened-card{% endif %}">
+                <div class="header-section">
+                    <h2 class="artist-name">
+                        {% if loop.first %}
+                        <span class="most-listened-text">🌟 Queridinho: </span>
+                        {% endif %}
+                        <a target="_blank" class="artist-link"
+                            href="https://www.last.fm/pt/music/{{ item.top_artist | replace(" ", " %20") }}">
+                            {{ item.top_artist }}
+                        </a>
+                    </h2>
+                    <p class="genre"><span>{{ item.genre }}</span></p>
+                </div>
+                <div class="content-section">
+                    <p class="listening-info">
+                        {% if loop.first %}
+                        🎉 Parabéns! Parece que você tem um(a) favorito(a): {{ item.top_artist }}! 🎶 Você o(a) ouviu
+                        {{item.playcount_artist}} vezes durante o período de {{ period }}. Que tal explorar artistas
+                        semelhantes para expandir ainda mais seus horizontes musicais? 🚀
+                        {% else %}
+                        Você também curte o som de {{ item.top_artist }}! 🎧 Já o escutou
+                        {{item.playcount_artist}} vezes durante o período de {{ period }}. Por que não descobrir mais
+                        artistas interessantes para variar um pouco? 🎵
+                        {% endif %}
+
+                    </p>
+                    <section class="similar-artists-section">
+                        <h3 class="similar-artists-title">Explore Novos Talentos:</h3>
+                        <ul class="similar-artists-list">
+                            {% for similar_artist in item.similar_artists %}
+                                <li>
+                                    <a target="_blank" class="similar-artist-link"
+                                        href="https://www.last.fm/pt/music/{{ similar_artist | replace(" ", " %20") }}">
+                                        {{ similar_artist }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </section>
+                    
                     </ul>
                 </div>
+            </div>
             {% endfor %}
-                <br>
         </div>
+
+        <hr class="separator">
+        <div class="container">
+            <h1 class="retrospect-title">🎉 Sua Retrospectiva Musical</h1>
+            <div id="data_pie_top_track" class="highlight-section">
+                <p>🎶 Suas principais faixas dos últimos {{ period }} foram escolhidas a dedo! Destaque para <span class="highlight-text">{{top_track}}</span>, uma verdadeira joia musical que marcou momentos nesse periodo. 🎵</p>
+            </div>
+        
+            <div id="data_pie_top_album" class="highlight-section">
+                <p>🔥 Seus últimos {{ period }} foram embalados por álbuns incríveis, com <span class="highlight-text">{{top_album}}</span> liderando a lista! Cada faixa contou uma história única e contribuiu para tornar uma experiência memorável. 🎧</p>
+                <p>É fascinante ver como a música pode nos transportar para diferentes emoções e lugares. 🚀</p>
+            </div>
+        </div>
+        
+        <hr class="separator">
     </div>
 </body>
+
+
+<script>
+    var data_pie_top_track = {{ data_pie_top_track | safe }};
+    Plotly.newPlot('data_pie_top_track', data_pie_top_track.data, data_pie_top_track.layout);
+
+    var data_pie_top_album = {{ data_pie_top_album | safe }};
+    Plotly.newPlot('data_pie_top_album', data_pie_top_album.data, data_pie_top_album.layout);
+</script>
+
 
 </html>
