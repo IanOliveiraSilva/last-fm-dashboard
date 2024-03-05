@@ -410,7 +410,7 @@ body {
     margin-bottom: 20px;
 }
 
-.track-card, .track-card-now-playing {
+.track-card{
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -421,7 +421,13 @@ body {
 }
 
 .track-card-now-playing {
+    background-color: #ffffff;
+    border-radius: 10px;
     box-shadow: 0 0 15px rgba(215, 146, 255, 1);
+    width: 80%;
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: transform 0.3s ease-in-out;
 }
 
 .track-card-now-playing:hover, .track-card:hover {
