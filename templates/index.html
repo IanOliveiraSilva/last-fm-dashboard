@@ -87,54 +87,54 @@
         </div>
 
         <hr class="separator">
-        <div class="artist-container">
-            <h1 class="retrospect-title">🎉 Seus artistas mais ouvidos</h1>
-            {% for item in top_artists_and_similars %}
-            <div class="artist-card {% if loop.first %}most-listened-card{% endif %}">
-                <div class="header-section">
-                    <h2 class="artist-name">
-                        {% if loop.first %}
-                        <span class="most-listened-text">🌟 Queridinho: </span><br>
-                        {% endif %}
-                        <a target="_blank" class="artist-link"
-                            href="https://www.last.fm/pt/music/{{ item.top_artist | replace(" ", " %20") }}">
-                            {{ item.top_artist }}
-                        </a>
-                    </h2>
-                    <p class="genre"><span>{{ item.genre }}</span></p>
-                </div>
-                <div class="content-section">
-                    <p class="listening-info">
-                        {% if loop.first %}
-                        🎉 Parabéns! Parece que você tem um(a) favorito(a): {{ item.top_artist }}! 🎶 Você o(a) ouviu
-                        {{item.playcount_artist}} vezes durante o período de {{ period }}. Que tal explorar artistas
-                        semelhantes para expandir ainda mais seus horizontes musicais? 🚀
-                        {% else %}
-                        Você também curte o som de {{ item.top_artist }}! 🎧 Já o escutou
-                        {{item.playcount_artist}} vezes durante o período de {{ period }}. Por que não descobrir mais
-                        artistas interessantes para variar um pouco? 🎵
-                        {% endif %}
+            <div class="artist-container">
+                <h1 class="retrospect-title">🎉 Seus artistas mais ouvidos</h1>
+                {% for item in top_artists_and_similars %}
+                <div class="artist-card {% if loop.first %}most-listened-card{% endif %}">
+                    <div class="header-section">
+                        <h2 class="artist-name">
+                            {% if loop.first %}
+                            <span class="most-listened-text">🌟 Queridinho: </span><br>
+                            {% endif %}
+                            <a target="_blank" class="artist-link"
+                                href="https://www.last.fm/pt/music/{{ item.top_artist | replace(" ", " %20") }}">
+                                {{ item.top_artist }}
+                            </a>
+                        </h2>
+                        <p class="genre"><span>{{ item.genre }}</span></p>
+                    </div>
+                    <div class="content-section">
+                        <p class="listening-info">
+                            {% if loop.first %}
+                            🎉 Parabéns! Parece que você tem um(a) favorito(a): {{ item.top_artist }}! 🎶 Você o(a) ouviu
+                            {{item.playcount_artist}} vezes durante o período de {{ period }}. Que tal explorar artistas
+                            semelhantes para expandir ainda mais seus horizontes musicais? 🚀
+                            {% else %}
+                            Você também curte o som de {{ item.top_artist }}! 🎧 Já o escutou
+                            {{item.playcount_artist}} vezes durante o período de {{ period }}. Por que não descobrir mais
+                            artistas interessantes para variar um pouco? 🎵
+                            {% endif %}
 
-                    </p>
-                    <section class="similar-artists-section">
-                        <h3 class="similar-artists-title">Explore Novos Talentos:</h3>
-                        <ul class="similar-artists-list">
-                            {% for similar_artist in item.similar_artists %}
-                                <li>
-                                    <a target="_blank" class="similar-artist-link"
-                                        href="https://www.last.fm/pt/music/{{ similar_artist | replace(" ", " %20") }}">
-                                        {{ similar_artist }}
-                                    </a>
-                                </li>
-                            {% endfor %}
+                        </p>
+                        <section class="similar-artists-section">
+                            <h3 class="similar-artists-title">Explore Novos Talentos:</h3>
+                            <ul class="similar-artists-list">
+                                {% for similar_artist in item.similar_artists %}
+                                    <li>
+                                        <a target="_blank" class="similar-artist-link"
+                                            href="https://www.last.fm/pt/music/{{ similar_artist | replace(" ", " %20") }}">
+                                            {{ similar_artist }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </section>
+                        
                         </ul>
-                    </section>
-                    
-                    </ul>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
 
         <hr class="separator">
         <div class="track-container">
@@ -197,6 +197,7 @@
 
     var data_pie_top_album = {{ data_pie_top_album | safe }};
     Plotly.newPlot('data_pie_top_album', data_pie_top_album.data, data_pie_top_album.layout);
+
 </script>
 
 

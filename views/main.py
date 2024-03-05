@@ -41,14 +41,12 @@ def get_data(fetcher):
 def get_top_track(data_track):
     for track in data_track['toptracks']['track'][:1]:
         top_track = track['name']
-        print(top_track)
     return top_track
 
 def get_top_album(data_album):
     top_album = ''
     for album in data_album['topalbums']['album'][:1]:
         top_album = album['name']
-        print(top_album)
     return top_album
 
 def process_data(fetcher, data_artists):
@@ -59,12 +57,17 @@ def process_data(fetcher, data_artists):
 def index():
     if request.method == 'POST':
         user, period = get_user_input()
+
         fetcher = DataFetcher(user, period)
+
         data_artists, data_user, data_tracks, data_albums, data_recent_tracks = get_data(fetcher)
+
         top_artists_and_similars = process_data(fetcher, data_artists)
+
         top_track = get_top_track(data_tracks)
         top_album = get_top_album(data_albums)
         plotter = Plotter()
+
         data_pie_top_track = plotter.plot_data_pie(data_tracks, "track", user, period)
         data_pie_top_album = plotter.plot_data_pie(data_albums, "album", user, period)
 

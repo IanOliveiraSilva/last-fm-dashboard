@@ -356,9 +356,7 @@ body {
 .highlight-section {
     margin-top: 20px;
     padding: 20px;
-    background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 .highlight-text {
@@ -444,6 +442,7 @@ body {
 .track-name, .artist-name, .album-name {
     color: #3a3a3a;
     font-size: 16px;
+    line-height: 1.5;
 }
 
 .album-title {
@@ -458,6 +457,7 @@ body {
     font-size: 14px;
     font-weight: bold;
     transition: color 0.3s ease-in-out;
+    display: block; 
 }
 
 .track-link:hover {

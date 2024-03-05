@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 
+
 class Plotter:
     def plot_data_pie(self, data, key, user, period):
         names = []
@@ -48,4 +49,3 @@ class Plotter:
         fig = go.Figure(data=[pie], layout=layout)
 
         return fig.to_json()
-
