@@ -34,8 +34,9 @@ def get_data(fetcher):
     data_artists = fetcher.get_json_data("user.gettopartists")
     data_tracks = fetcher.get_json_data("user.gettoptracks")
     data_albums = fetcher.get_json_data("user.gettopalbums")
+    data_recent_tracks = fetcher.get_recent_track()
     data_user = fetcher.get_user_info()
-    return data_artists, data_user, data_tracks, data_albums
+    return data_artists, data_user, data_tracks, data_albums, data_recent_tracks
 
 def get_top_track(data_track):
     for track in data_track['toptracks']['track'][:1]:
@@ -59,7 +60,7 @@ def index():
     if request.method == 'POST':
         user, period = get_user_input()
         fetcher = DataFetcher(user, period)
-        data_artists, data_user, data_tracks, data_albums = get_data(fetcher)
+        data_artists, data_user, data_tracks, data_albums, data_recent_tracks = get_data(fetcher)
         top_artists_and_similars = process_data(fetcher, data_artists)
         top_track = get_top_track(data_tracks)
         top_album = get_top_album(data_albums)
@@ -67,18 +68,18 @@ def index():
         data_pie_top_track = plotter.plot_data_pie(data_tracks, "track", user, period)
         data_pie_top_album = plotter.plot_data_pie(data_albums, "album", user, period)
 
-        return render_template('index.html', period=period, top_track=top_track, top_album=top_album, top_artists_and_similars=top_artists_and_similars, data_user=data_user, data_pie_top_album=data_pie_top_album, data_pie_top_track=data_pie_top_track)
+        return render_template('index.html', period=period, data_recent_tracks=data_recent_tracks, top_track=top_track, top_album=top_album, top_artists_and_similars=top_artists_and_similars, data_user=data_user, data_pie_top_album=data_pie_top_album, data_pie_top_track=data_pie_top_track)
     else: 
         user, period = get_user_input()
         fetcher = DataFetcher(user, period)
-        data_artists, data_user, data_tracks, data_albums = get_data(fetcher)
+        data_artists, data_user, data_tracks, data_albums, data_recent_tracks = get_data(fetcher)
         top_artists_and_similars = process_data(fetcher, data_artists)
         top_track = get_top_track(data_tracks)
         top_album = get_top_album(data_albums)
         plotter = Plotter()
         data_pie_top_track = plotter.plot_data_pie(data_tracks, "track", user, period)
         data_pie_top_album = plotter.plot_data_pie(data_albums, "album", user, period)
-        return render_template('index.html', period=period, top_track=top_track, top_album=top_album, top_artists_and_similars=top_artists_and_similars, data_user=data_user, data_pie_top_album=data_pie_top_album, data_pie_top_track=data_pie_top_track)
+        return render_template('index.html', period=period, top_track=top_track, data_recent_tracks=data_recent_tracks, top_album=top_album, top_artists_and_similars=top_artists_and_similars, data_user=data_user, data_pie_top_album=data_pie_top_album, data_pie_top_track=data_pie_top_track)
         
 
 if __name__ == '__main__':

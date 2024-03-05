@@ -88,14 +88,13 @@
 
         <hr class="separator">
         <div class="artist-container">
-
             <h1 class="retrospect-title">🎉 Seus artistas mais ouvidos</h1>
             {% for item in top_artists_and_similars %}
             <div class="artist-card {% if loop.first %}most-listened-card{% endif %}">
                 <div class="header-section">
                     <h2 class="artist-name">
                         {% if loop.first %}
-                        <span class="most-listened-text">🌟 Queridinho: </span>
+                        <span class="most-listened-text">🌟 Queridinho: </span><br>
                         {% endif %}
                         <a target="_blank" class="artist-link"
                             href="https://www.last.fm/pt/music/{{ item.top_artist | replace(" ", " %20") }}">
@@ -137,6 +136,43 @@
             {% endfor %}
         </div>
 
+        <hr class="separator">
+        <div class="track-container">
+            <h1 class="retrospect-title">🎵 Suas faixas recentes</h1>
+            {% for track in data_recent_tracks.recenttracks.track %}
+            <div class="{% if '@attr' in track and track['@attr'].nowplaying %}track-card-now-playing{% else %}track-card{% endif %}">
+                <div class="header-section">
+                    <h2 class="track-name">
+                        <a target="_blank" class="track-link"
+                            href="{{ track.artist.url }}">
+                            {{ track.name }}
+                        </a>
+                    </h2>
+                    <a target="_blank" class="track-link" href="https://www.last.fm/music/{{ track.artist.url }}">
+                        {{ track.artist['#text'] }}
+                    </a>
+                </div>
+                <div class="content-section">
+                    <p class="listening-info">
+                        {% if '@attr' in track and track['@attr'].nowplaying %}
+                        Você está ouvindo "{{ track.name }}" de {{ track.artist['#text'] }} agora! 🎧
+                        Aproveite a música! 🎵
+                        {% else %}
+                        Você ouviu "{{ track.name }}" de {{ track.artist['#text'] }} em {{ track.date['#text'] }}. 🎧
+                        {% endif %}
+                    </p>
+                    <section class="album-section">
+                        <h3 class="album-title">Álbum:</h3>
+                        <a target="_blank" class="track-link" href="https://www.last.fm/music/{{ track.artist.url }}/{{ track.album.url }}">
+                            {{ track.album['#text'] }}
+                        </a>
+                    </section>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        
         <hr class="separator">
         <div class="container">
             <h1 class="retrospect-title">🎉 Sua Retrospectiva Musical</h1>
