@@ -411,7 +411,7 @@ body {
 }
 
 .track-card, .track-card-now-playing {
-    background-color: #f8f4ff;
+    background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 80%;
